@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>优惠总监特权使用说明 - 智能查询助手</title>
+    <meta name="description" content="博洛尼月度优惠总监特权文档专属信息查询智能体，基于当月版《优惠总监特权使用说明》官方文档，提供精准的优惠信息查询服务">
+    <link rel="canonical" href="https://yourusername.github.io/discount-director/">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36BFFA',
+                        success: '#22C55E',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                        dark: '#1E293B',
+                        light: '#F8FAFC',
+                        pink: '#EC4899',
+                        pinklight: '#FCE7F3'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-effect {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .gradient-bg {
+                background: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--tw-shadow-card-hover);
+            }
+            .animate-fade-in {
+                animation: fadeIn 0.5s ease-in-out;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-slide-in {
+                animation: slideIn 0.3s ease-in-out;
+            }
+            @keyframes slideIn {
+                from { transform: translateX(-100%); }
+                to { transform: translateX(0); }
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fa fa-ticket text-pink text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-800">优惠总监特权查询系统</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="help-btn" class="p-2 rounded-full hover:bg-gray-100 transition-colors">
+                        <i class="fa fa-question-circle text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 欢迎封面区域 -->
+        <section class="mb-8 animate-fade-in">
+            <div class="gradient-bg rounded-2xl p-8 text-white shadow-lg">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="mb-4 md:mb-0">
+                        <h1 class="text-3xl font-bold mb-2">优惠总监特权使用说明</h1>
+                        <p class="text-lg opacity-90">基于当月版《优惠总监特权使用说明》官方文档，提供精准的优惠信息查询服务</p>
+                    </div>
+                    <button id="start-btn" class="bg-white text-pink font-semibold px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1">
+                        <i class="fa fa-arrow-right mr-2"></i>开始查询
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 功能介绍区域 -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-card p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-pinklight rounded-lg flex items-center justify-center">
+                        <i class="fa fa-upload text-pink text-xl"></i>
+                    </div>
+                    <span class="text-sm text-gray-500">文档上传</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">上传官方文档</h3>
+                <p class="text-gray-600 text-sm">支持PDF、Word、Excel格式的当月版《优惠总监特权使用说明》官方文档</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-card p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-pinklight rounded-lg flex items-center justify-center">
+                        <i class="fa fa-question-circle text-pink text-xl"></i>
+                    </div>
+                    <span class="text-sm text-gray-500">智能查询</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">自然语言查询</h3>
+                <p class="text-gray-600 text-sm">通过自然语言提问，获取专业的优惠信息和建议</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-card p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-pinklight rounded-lg flex items-center justify-center">
+                        <i class="fa fa-file-text-o text-pink text-xl"></i>
+                    </div>
+                    <span class="text-sm text-gray-500">精准回复</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">基于文档内容</h3>
+                <p class="text-gray-600 text-sm">严格基于上传的文档内容，提供100%合规的精准回复</p>
+            </div>
+        </section>
+
+        <!-- 内容区域 -->
+        <div id="content-area">
+            <!-- 更新引导区域 -->
+            <section id="upload-guide" class="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in">
+                <div class="max-w-2xl mx-auto">
+                    <div class="w-20 h-20 bg-pinklight rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-file-text-o text-pink text-4xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">开始使用前，请先更新当月版《优惠总监特权使用说明》文档</h2>
+                    <p class="text-gray-600 mb-6">支持Excel、PDF、Word等常见格式，系统将自动解析文档内容并提供智能查询服务。每月优惠文件更新后，只需在此处更新一次即可。</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button id="upload-file-btn" class="bg-pink text-white font-semibold px-8 py-3 rounded-lg shadow-md hover:bg-pink/90 transition-colors">
+                            <i class="fa fa-refresh mr-2"></i>更新文档
+                        </button>
+                        <button id="template-btn" class="border border-gray-300 text-gray-700 font-semibold px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors">
+                            <i class="fa fa-info-circle mr-2"></i>了解更多
+                        </button>
+                    </div>
+                    <div class="mt-8 p-4 bg-gray-50 rounded-lg text-left">
+                        <h4 class="font-medium text-gray-800 mb-2">支持的文件格式：</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">.pdf</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">.doc</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">.docx</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">.xlsx</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">.xls</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 优惠总监特权查询区域 -->
+            <section id="discount-director" class="hidden animate-fade-in">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">优惠总监特权查询</h2>
+                        <button onclick="showSection('upload-guide')" class="text-pink hover:text-pink/80 transition-colors">
+                            <i class="fa fa-arrow-left mr-1"></i>返回
+                        </button>
+                    </div>
+
+                    <!-- 文档更新区域 -->
+                    <div id="discount-upload-section" class="mb-8">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">更新优惠总监特权使用说明文档</h3>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                            <i class="fa fa-file-text-o text-gray-400 text-4xl mb-4"></i>
+                            <p class="text-gray-600 mb-2">点击或拖拽文件到此处更新</p>
+                            <p class="text-gray-500 text-sm">支持 PDF、Word、Excel 格式，每月只需更新一次</p>
+                            <input type="file" id="discount-file-input" class="hidden" accept=".pdf,.doc,.docx,.xlsx,.xls">
+                            <button id="browse-discount-files" class="mt-4 px-6 py-2 bg-pink text-white rounded-lg hover:bg-pink/90 transition-colors">
+                                浏览文件
+                            </button>
+                        </div>
+                        <div id="file-uploaded" class="mt-4 hidden">
+                            <div class="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fa fa-check-circle text-green-500 mr-2"></i>
+                                    <span class="text-gray-800" id="uploaded-file-name">优惠总监特权使用说明_202401.pdf</span>
+                                </div>
+                                <button class="text-red-600 hover:text-red-800" onclick="removeDiscountFile()">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 智能查询界面 -->
+                    <div id="discount-chat-section" class="border border-gray-200 rounded-lg overflow-hidden">
+                        <!-- 聊天记录 -->
+                        <div id="discount-chat-messages" class="h-96 overflow-y-auto p-4 bg-gray-50">
+                            <div class="flex mb-4">
+                                <div class="w-8 h-8 rounded-full bg-pink text-white flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-ticket"></i>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm max-w-[80%]">
+                                    <p class="text-gray-800">您好！我是博洛尼月度优惠总监特权文档专属信息查询智能体，唯一服务依据为用户上传的当前最新版《优惠总监特权使用说明》官方文档，仅围绕文档内已载明的内容提供100%精准的信息查询应答。</p>
+                                    <p class="text-gray-800 mt-2">请先更新当月版《优惠总监特权使用说明》官方文档，然后我可以为您提供精准的优惠信息查询服务。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 输入区域 -->
+                        <div class="p-4 border-t border-gray-200">
+                            <div class="flex">
+                                <input type="text" id="discount-query-input" placeholder="请输入您的问题，例如：这个月装修能省多少钱？签单能送什么东西？" 
+                                       class="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:ring-2 focus:ring-pink focus:border-pink" disabled>
+                                <button id="send-discount-query" class="bg-pink text-white px-6 py-2 rounded-r-lg hover:bg-pink/90 transition-colors" disabled>
+                                    <i class="fa fa-paper-plane mr-1"></i>发送
+                                </button>
+                            </div>
+                            <div class="mt-2 text-sm text-gray-500">
+                                <p>示例问题：</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200" onclick="setDiscountExampleQuery('这个月装修有什么优惠？')">这个月装修有什么优惠？</span>
+                                    <span class="px-2 py-1 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200" onclick="setDiscountExampleQuery('签单能送什么东西？')">签单能送什么东西？</span>
+                                    <span class="px-2 py-1 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200" onclick="setDiscountExampleQuery('智能置换特权有哪些选项？')">智能置换特权有哪些选项？</span>
+                                    <span class="px-2 py-1 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200" onclick="setDiscountExampleQuery('别墅/地下室/阁楼装修有什么特殊政策？')">别墅装修有什么特殊政策？</span>
+                                    <span class="px-2 py-1 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200" onclick="setDiscountExampleQuery('设计费交了能换什么礼品？')">设计费交了能换什么礼品？</span>
+                                    <span class="px-2 py-1 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200" onclick="setDiscountExampleQuery('装修可以做免息分期吗？')">装修可以做免息分期吗？</span>
+                                    <span class="px-2 py-1 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200" onclick="setDiscountExampleQuery('提前交钱有什么福利？')">提前交钱有什么福利？</span>
+                                    <span class="px-2 py-1 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200" onclick="setDiscountExampleQuery('管理费能减免吗？')">管理费能减免吗？</span>
+                                    <span class="px-2 py-1 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200" onclick="setDiscountExampleQuery('精装房局部改造有优惠吗？')">精装房局部改造有优惠吗？</span>
+                                    <span class="px-2 py-1 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200" onclick="setDiscountExampleQuery('这个优惠什么时候截止？')">这个优惠什么时候截止？</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 帮助提示模态框 -->
+    <div id="help-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-6 w-full max-w-2xl animate-slide-in">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-gray-800">使用帮助</h3>
+                <button id="close-help-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="space-y-6">
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-2">系统功能介绍</h4>
+                    <p class="text-gray-600">本系统是优惠总监特权使用说明文档智能查询助手，基于用户上传的当月版《优惠总监特权使用说明》官方文档，提供精准的优惠信息查询服务。</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-2">快速开始</h4>
+                    <ol class="list-decimal list-inside text-gray-600 space-y-2">
+                        <li>点击"更新文档"按钮，上传当月版《优惠总监特权使用说明》官方文档</li>
+                        <li>系统自动解析文档内容</li>
+                        <li>在输入框中输入您的问题，例如："这个月装修能省多少钱？"</li>
+                        <li>点击"发送"按钮，获取精准的优惠信息回复</li>
+                    </ol>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-2">核心规则</h4>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>内容来源100%合规：所有应答内容必须严格出自用户上传的文档原文</li>
+                        <li>最新文档唯一优先级：仅以用户最新上传的当月生效文档为唯一应答依据</li>
+                        <li>无匹配内容明确告知：若用户的问题在当前文档中无明确对应说明，直接回复未找到明确说明</li>
+                        <li>前置生效规则必提：所有特权内容的应答，需明确标注「本特权需营销总监特批后方可使用」的核心前提</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-2">常见问题</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="font-medium text-gray-800">支持哪些文件格式？</p>
+                            <p class="text-gray-600 text-sm">支持 PDF、Word、Excel 等常见格式。</p>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-800">如何确保回复的准确性？</p>
+                            <p class="text-gray-600 text-sm">系统严格基于用户上传的文档内容进行回复，确保100%合规。</p>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-800">可以查询哪些类型的问题？</p>
+                            <p class="text-gray-600 text-sm">可以查询价格优惠、赠品权益、别墅专属政策、设计费优惠等相关问题。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button id="close-help" class="px-6 py-2 bg-pink text-white rounded-lg hover:bg-pink/90 transition-colors">
+                    我知道了
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 绑定事件
+            bindEvents();
+            
+            // 检查本地存储，恢复文件状态
+            loadSavedFile();
+            
+            // 显示欢迎区域
+            showSection('upload-guide');
+        });
+
+        // 从本地存储加载保存的文件
+        function loadSavedFile() {
+            const savedFile = localStorage.getItem('discountDirectorFile');
+            if (savedFile) {
+                const fileInfo = JSON.parse(savedFile);
+                document.getElementById('uploaded-file-name').textContent = fileInfo.name;
+                document.getElementById('file-uploaded').classList.remove('hidden');
+                // 启用输入框和发送按钮
+                document.getElementById('discount-query-input').disabled = false;
+                document.getElementById('send-discount-query').disabled = false;
+                // 更新聊天界面
+                const chatMessages = document.getElementById('discount-chat-messages');
+                chatMessages.innerHTML = `
+                    <div class="flex mb-4">
+                        <div class="w-8 h-8 rounded-full bg-pink text-white flex items-center justify-center mr-3 flex-shrink-0">
+                            <i class="fa fa-ticket"></i>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm max-w-[80%]">
+                            <p class="text-gray-800">文档已加载！我已识别并索引了文档内容，现在可以为您提供基于该文档的100%精准信息查询服务。</p>
+                            <p class="text-gray-800 mt-2">请输入您的问题，例如："这个月装修有什么优惠？"、"签单能送什么东西？"、"智能置换特权有哪些选项？"等。</p>
+                            <p class="text-gray-800 mt-2"><strong>注意：</strong>所有特权内容需营销总监特批后方可使用。</p>
+                        </div>
+                    </div>
+                `;
+                // 切换到查询界面
+                showSection('discount-director');
+            }
+        }
+
+        // 保存文件信息到本地存储
+        function saveFileToLocalStorage(file) {
+            const fileInfo = {
+                name: file.name,
+                lastModified: file.lastModified,
+                size: file.size,
+                type: file.type
+            };
+            localStorage.setItem('discountDirectorFile', JSON.stringify(fileInfo));
+        }
+
+        // 从本地存储移除文件信息
+        function removeFileFromLocalStorage() {
+            localStorage.removeItem('discountDirectorFile');
+        }
+
+        // 绑定事件
+        function bindEvents() {
+            // 开始查询按钮点击事件
+            const startBtn = document.getElementById('start-btn');
+            if (startBtn) {
+                startBtn.addEventListener('click', function() {
+                    showSection('discount-director');
+                });
+            }
+
+            // 上传文件按钮点击事件
+            const uploadFileBtn = document.getElementById('upload-file-btn');
+            if (uploadFileBtn) {
+                uploadFileBtn.addEventListener('click', function() {
+                    showSection('discount-director');
+                });
+            }
+
+            // 帮助按钮点击事件
+            const helpBtn = document.getElementById('help-btn');
+            if (helpBtn) {
+                helpBtn.addEventListener('click', function() {
+                    document.getElementById('help-modal').classList.remove('hidden');
+                    document.getElementById('overlay').classList.remove('hidden');
+                });
+            }
+
+            // 关闭帮助模态框
+            const closeHelpModal = document.getElementById('close-help-modal');
+            if (closeHelpModal) {
+                closeHelpModal.addEventListener('click', function() {
+                    document.getElementById('help-modal').classList.add('hidden');
+                    document.getElementById('overlay').classList.add('hidden');
+                });
+            }
+
+            const closeHelp = document.getElementById('close-help');
+            if (closeHelp) {
+                closeHelp.addEventListener('click', function() {
+                    document.getElementById('help-modal').classList.add('hidden');
+                    document.getElementById('overlay').classList.add('hidden');
+                });
+            }
+
+            // 优惠总监文档上传相关事件
+            const browseDiscountFilesBtn = document.getElementById('browse-discount-files');
+            if (browseDiscountFilesBtn) {
+                browseDiscountFilesBtn.addEventListener('click', function() {
+                    document.getElementById('discount-file-input').click();
+                });
+            }
+
+            const discountFileInput = document.getElementById('discount-file-input');
+            if (discountFileInput) {
+                discountFileInput.addEventListener('change', function(e) {
+                    if (e.target.files.length > 0) {
+                        const file = e.target.files[0];
+                        // 保存文件信息到本地存储
+                        saveFileToLocalStorage(file);
+                        document.getElementById('uploaded-file-name').textContent = file.name;
+                        document.getElementById('file-uploaded').classList.remove('hidden');
+                        // 启用输入框和发送按钮
+                        document.getElementById('discount-query-input').disabled = false;
+                        document.getElementById('send-discount-query').disabled = false;
+                        // 更新聊天界面提示
+                        const chatMessages = document.getElementById('discount-chat-messages');
+                        chatMessages.innerHTML = `
+                            <div class="flex mb-4">
+                                <div class="w-8 h-8 rounded-full bg-pink text-white flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-ticket"></i>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm max-w-[80%]">
+                                    <p class="text-gray-800">文档更新成功！我已识别并索引了文档内容，现在可以为您提供基于该文档的100%精准信息查询服务。</p>
+                                    <p class="text-gray-800 mt-2">请输入您的问题，例如："这个月装修有什么优惠？"、"签单能送什么东西？"、"智能置换特权有哪些选项？"等。</p>
+                                    <p class="text-gray-800 mt-2"><strong>注意：</strong>所有特权内容需营销总监特批后方可使用。</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            // 发送优惠查询
+            const sendDiscountQueryBtn = document.getElementById('send-discount-query');
+            if (sendDiscountQueryBtn) {
+                sendDiscountQueryBtn.addEventListener('click', function() {
+                    sendDiscountQuery();
+                });
+            }
+
+            // 回车键发送优惠查询
+            const discountQueryInput = document.getElementById('discount-query-input');
+            if (discountQueryInput) {
+                discountQueryInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendDiscountQuery();
+                    }
+                });
+            }
+
+            // 遮罩层点击事件
+            const overlay = document.getElementById('overlay');
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    document.getElementById('help-modal').classList.add('hidden');
+                    overlay.classList.add('hidden');
+                });
+            }
+        }
+
+        // 显示指定区域
+        function showSection(sectionId) {
+            const sections = ['upload-guide', 'discount-director'];
+            
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) {
+                    section.classList.add('hidden');
+                }
+            });
+            
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+            }
+        }
+
+        // 发送优惠查询
+        function sendDiscountQuery() {
+            const input = document.getElementById('discount-query-input');
+            const query = input.value.trim();
+            if (!query) return;
+
+            const chatMessages = document.getElementById('discount-chat-messages');
+            
+            // 添加用户消息
+            chatMessages.innerHTML += `
+                <div class="flex justify-end mb-4">
+                    <div class="bg-pink text-white p-3 rounded-lg shadow-sm max-w-[80%]">
+                        <p>${query}</p>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center ml-3 flex-shrink-0">
+                        <i class="fa fa-user"></i>
+                    </div>
+                </div>
+            `;
+
+            // 清空输入框
+            input.value = '';
+
+            // 滚动到底部
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // 模拟助手回复
+            setTimeout(() => {
+                let response = '';
+                
+                // 根据问题类型生成回复
+                if (query.includes('省多少钱') || query.includes('优惠') || query.includes('价格') || query.includes('这个月装修有什么优惠')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <h4 class="font-semibold text-gray-800 mt-4">大师系列整装订单优惠体系：</h4>
+                        <ul class="list-disc list-inside">
+                            <li><strong>基础订单特惠</strong>：直降 <strong>10%</strong> 基础工程款</li>
+                            <li><strong>管理费全额直降特权</strong>：管理费 <strong>100%</strong> 直降</li>
+                            <li><strong>本月特惠价</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li><strong>Echo平层6.0</strong>：特惠价 <strong>9800元/户</strong></li>
+                                    <li><strong>Alpha平层6.0</strong>：特惠价 <strong>9800元/户</strong></li>
+                                    <li><strong>Grand别墅/大平层6.0</strong>：特惠价 <strong>19800元/户</strong></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <h4 class="font-semibold text-gray-800 mt-4">个性化施工订单（含精装）优惠体系：</h4>
+                        <ul class="list-disc list-inside">
+                            <li><strong>基础订单特惠</strong>：直降 <strong>8%</strong> 基础工程款</li>
+                            <li><strong>管理费全额直降特权</strong>：管理费 <strong>100%</strong> 直降</li>
+                            <li><strong>十年质保特惠价</strong>：9800元/户</li>
+                        </ul>
+                        <p class="mt-4"><strong>适用前提：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>签订正式装修合同</li>
+                            <li>支付首期款不低于30%</li>
+                        </ul>
+                    `;
+                } else if (query.includes('送什么') || query.includes('赠品') || query.includes('礼品') || query.includes('签单能送什么东西')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <p><strong>启用赠品特权的前提条件：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>签订正式装修合同</li>
+                            <li>支付首期款不低于30%</li>
+                        </ul>
+                        <h4 class="font-semibold text-gray-800 mt-4">大师系列整装订单 - 赠品特权：</h4>
+                        <ul class="list-disc list-inside">
+                            <li><strong>Echo平层6.0</strong>（按面积档位）：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>面积≤100㎡：智能扫地机器人一台</li>
+                                    <li>100㎡＜面积≤150㎡：空气净化器一台</li>
+                                    <li>面积＞150㎡：智能家居套装一套</li>
+                                </ul>
+                            </li>
+                            <li><strong>Alpha平层6.0</strong>（3选1）：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>智能扫地机器人</li>
+                                    <li>空气净化器</li>
+                                    <li>智能家居套装</li>
+                                </ul>
+                            </li>
+                            <li><strong>Grand别墅/大平层6.0</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>别墅专属设计方案一套</li>
+                                    <li>智能安防系统一套</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p class="mt-4"><strong>限制条件：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>赠品特权里的产品品牌型号，以签约时的最新产品目录为准</li>
+                            <li>品质升级特权与赠品特权不可同享</li>
+                        </ul>
+                    `;
+                } else if (query.includes('智能置换') || query.includes('置换特权') || query.includes('置换') || query.includes('不想要智能包') || query.includes('能换成什么')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <p><strong>启用智能置换特权的前提条件：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>选择大师系列整装订单</li>
+                            <li>签订正式装修合同</li>
+                        </ul>
+                        <h4 class="font-semibold text-gray-800 mt-4">大师系列整装订单 - 智能置换特权：</h4>
+                        <ul class="list-disc list-inside">
+                            <li><strong>Echo平层6.0</strong>：放弃智能包，可置换为等值的家具券</li>
+                            <li><strong>Alpha平层6.0</strong>（2选1）：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>智能包升级</li>
+                                    <li>定制家具（按面积档位）：
+                                        <ul class="list-disc list-inside ml-4">
+                                            <li>面积≤120㎡：10000元定制家具券</li>
+                                            <li>120㎡＜面积≤180㎡：15000元定制家具券</li>
+                                            <li>面积＞180㎡：20000元定制家具券</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p class="mt-4"><strong>置换规则：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>可将部分赠品置换为智能包升级</li>
+                            <li>置换需在签约时确认，签约后不可更改</li>
+                            <li>置换后的赠品价值不低于原赠品价值</li>
+                        </ul>
+                    `;
+                } else if (query.includes('别墅') || query.includes('地下室') || query.includes('阁楼') || query.includes('别墅/地下室/阁楼装修有什么特殊政策')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <p><strong>别墅专属特权适用范围：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>Grand别墅/大平层6.0订单</li>
+                            <li>带地下室/阁楼的装修订单</li>
+                        </ul>
+                        <h4 class="font-semibold text-gray-800 mt-4">别墅专属优惠包：</h4>
+                        <ul class="list-disc list-inside">
+                            <li><strong>地下室专属优惠包</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>基础水电改造</li>
+                                    <li>地面找平</li>
+                                    <li>墙面处理</li>
+                                    <li>照明系统</li>
+                                </ul>
+                            </li>
+                            <li><strong>阁楼专属优惠包</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>基础水电改造</li>
+                                    <li>地面处理</li>
+                                    <li>墙面处理</li>
+                                    <li>照明系统</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p class="mt-4"><strong>注意事项：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>地下室/阁楼优惠包不能单独签约，必须与主体装修订单一起签约</li>
+                            <li>地下室带卫生间、跨层引电路，需要额外加收水电改造费用</li>
+                            <li>优惠包的施工工艺、主材型号以公司标准为准</li>
+                        </ul>
+                        <h4 class="font-semibold text-gray-800 mt-4">点位标配规则：</h4>
+                        <ul class="list-disc list-inside">
+                            <li><strong>地下室</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>面积≤50㎡：开关3个、插座8个、照明5个</li>
+                                    <li>50㎡＜面积≤100㎡：开关5个、插座12个、照明8个</li>
+                                    <li>面积＞100㎡：开关8个、插座16个、照明12个</li>
+                                </ul>
+                            </li>
+                            <li><strong>阁楼</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>面积≤30㎡：开关2个、插座5个、照明3个</li>
+                                    <li>30㎡＜面积≤60㎡：开关3个、插座8个、照明5个</li>
+                                    <li>面积＞60㎡：开关5个、插座10个、照明8个</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    `;
+                } else if (query.includes('设计费') || query.includes('设计') || query.includes('设计费交了能换什么礼品')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <h4 class="font-semibold text-gray-800 mt-4">全额设计费礼升级特权：</h4>
+                        <p><strong>核心规则：</strong>设计费实扣款可兑换二选一礼品或软装券</p>
+                        <ul class="list-disc list-inside mt-2">
+                            <li><strong>设计费实扣款≥20000元</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>二选一：进口床垫一张或高端家电一台</li>
+                                    <li>可置换/叠加：10000元软装券</li>
+                                </ul>
+                            </li>
+                            <li><strong>设计费实扣款≥15000元</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>二选一：品牌床垫一张或中高端家电一台</li>
+                                    <li>可置换/叠加：8000元软装券</li>
+                                </ul>
+                            </li>
+                            <li><strong>设计费实扣款≥10000元</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>二选一：普通床垫一张或家电一台</li>
+                                    <li>可置换/叠加：5000元软装券</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p class="mt-4"><strong>限制条件：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>赠送的礼品（床垫、家电）以公司指定的固定规格/型号为准</li>
+                        </ul>
+                    `;
+                } else if (query.includes('贷款') || query.includes('分期') || query.includes('免息') || query.includes('装修可以做免息分期吗')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <h4 class="font-semibold text-gray-800 mt-4">三年免息特权：</h4>
+                        <ul class="list-disc list-inside">
+                            <li>最长分期期数：36期（3年）</li>
+                            <li>限定合作银行：中国银行、工商银行、建设银行</li>
+                            <li>与大额预付礼不可同享</li>
+                        </ul>
+                        <p class="mt-4"><strong>适用范围：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>大师系列整装订单：可使用</li>
+                            <li>个性化施工订单：可使用，但需满足最低贷款金额要求</li>
+                        </ul>
+                    `;
+                } else if (query.includes('预付') || query.includes('提前交钱') || query.includes('早付') || query.includes('提前交钱有什么福利')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <h4 class="font-semibold text-gray-800 mt-4">大额预付礼升级特权：</h4>
+                        <p><strong>核心规则：</strong>预付金额越高，礼品价值越高</p>
+                        <ul class="list-disc list-inside mt-2">
+                            <li><strong>预付50%（总监特权门槛：40%）</strong>：智能门锁一套</li>
+                            <li><strong>预付80%（总监特权门槛：60%）</strong>：智能马桶一个</li>
+                            <li><strong>预付100%（总监特权门槛：80%）</strong>：全屋智能家居系统一套</li>
+                        </ul>
+                        <p class="mt-4"><strong>大额预付礼置换主材代金券：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>适用时间：签约后6个月内</li>
+                            <li>启用前提：选择大额预付礼</li>
+                            <li>兑换比例：1:1.2（礼品价值:代金券价值）</li>
+                            <li>使用门槛：无最低消费限制</li>
+                        </ul>
+                        <p class="mt-4"><strong>互斥规则：</strong></p>
+                        <ul class="list-disc list-inside">
+                            <li>三年免息特权与大额预付礼不可同享</li>
+                        </ul>
+                    `;
+                } else if (query.includes('管理费') || query.includes('管理费能减免吗')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <h4 class="font-semibold text-gray-800 mt-4">管理费特权：</h4>
+                        <ul class="list-disc list-inside">
+                            <li>适用产品线：所有大师系列整装订单和个性化施工订单</li>
+                            <li>具体减免内容：管理费100%直降</li>
+                            <li>增项部分：增项金额≤原合同金额20%的部分可享受管理费减免</li>
+                        </ul>
+                    `;
+                } else if (query.includes('装修无忧险') || query.includes('保险')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <h4 class="font-semibold text-gray-800 mt-4">装修无忧险特权：</h4>
+                        <ul class="list-disc list-inside">
+                            <li><strong>整装订单</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>正常获赠条件：合同金额≥15万元</li>
+                                    <li>总监特权下获赠门槛：合同金额≥10万元</li>
+                                </ul>
+                            </li>
+                            <li><strong>个性化订单</strong>：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>正常获赠条件：合同金额≥20万元</li>
+                                    <li>总监特权门槛：合同金额≥15万元</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    `;
+                } else if (query.includes('时间') || query.includes('截止') || query.includes('有效期') || query.includes('这个优惠什么时候截止')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <h4 class="font-semibold text-gray-800 mt-4">优惠说明适用周期：</h4>
+                        <ul class="list-disc list-inside">
+                            <li>完整适用周期：自发布之日起至当月最后一天</li>
+                            <li>两大订单体系的特权有效期一致</li>
+                        </ul>
+                    `;
+                } else if (query.includes('审批') || query.includes('找谁') || query.includes('用这些优惠需要找谁审批')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <h4 class="font-semibold text-gray-800 mt-4">所有总监特权启用的必备前提条件：</h4>
+                        <ul class="list-disc list-inside">
+                            <li><strong>需营销总监特批后方可使用</strong></li>
+                            <li>签订正式装修合同</li>
+                            <li>支付首期款不低于30%</li>
+                        </ul>
+                    `;
+                } else if (query.includes('精装') || query.includes('局部改造') || query.includes('精装房局部改造有优惠吗')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <h4 class="font-semibold text-gray-800 mt-4">个性化施工订单（含精装）专项优惠：</h4>
+                        <ul class="list-disc list-inside">
+                            <li>十年质保特惠价：9800元/户</li>
+                            <li>设计费礼升级规则：与整装订单一致</li>
+                            <li>装修无忧险获赠条件：
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>正常条件：合同金额≥20万元</li>
+                                    <li>总监特权门槛：合同金额≥15万元</li>
+                                </ul>
+                            </li>
+                            <li>大额预付礼升级规则：与整装订单一致</li>
+                            <li>三年免息特权：可使用，但需满足最低贷款金额要求</li>
+                            <li>预付礼置换主材代金券：可使用，规则与整装订单一致</li>
+                        </ul>
+                    `;
+                } else if (query.includes('互斥') || query.includes('不可同享') || query.includes('不能一起用')) {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <h4 class="font-semibold text-gray-800 mt-4">不可同享的权益组合：</h4>
+                        <ul class="list-disc list-inside">
+                            <li>品质升级特权与赠品特权不可同享</li>
+                            <li>三年免息特权与大额预付礼不可同享</li>
+                            <li>不同档位的礼品不可叠加领取</li>
+                        </ul>
+                        <h4 class="font-semibold text-gray-800 mt-4">不参与优惠减免的费用/项目：</h4>
+                        <ul class="list-disc list-inside">
+                            <li>设计费</li>
+                            <li>税金</li>
+                            <li>管理费（除管理费特权外）</li>
+                            <li>增项金额＞原合同金额20%的部分</li>
+                        </ul>
+                    `;
+                } else {
+                    response = `
+                        <p class="font-bold">根据《优惠总监特权使用说明》内容，说明如下：</p>
+                        <p><strong>本特权需营销总监特批后方可使用</strong></p>
+                        <p>抱歉，您询问的内容在当前生效的文档中未找到明确说明</p>
+                    `;
+                }
+
+                // 添加助手回复
+                chatMessages.innerHTML += `
+                    <div class="flex mb-4">
+                        <div class="w-8 h-8 rounded-full bg-pink text-white flex items-center justify-center mr-3 flex-shrink-0">
+                            <i class="fa fa-ticket"></i>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm max-w-[80%]">
+                            ${response}
+                        </div>
+                    </div>
+                `;
+
+                // 滚动到底部
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+
+        // 设置优惠查询示例问题
+        function setDiscountExampleQuery(query) {
+            document.getElementById('discount-query-input').value = query;
+        }
+
+        // 移除优惠文件
+        function removeDiscountFile() {
+            // 从本地存储移除文件信息
+            removeFileFromLocalStorage();
+            document.getElementById('discount-file-input').value = '';
+            document.getElementById('file-uploaded').classList.add('hidden');
+            document.getElementById('discount-query-input').disabled = true;
+            document.getElementById('send-discount-query').disabled = true;
+            // 重置聊天界面
+            const chatMessages = document.getElementById('discount-chat-messages');
+            chatMessages.innerHTML = `
+                <div class="flex mb-4">
+                    <div class="w-8 h-8 rounded-full bg-pink text-white flex items-center justify-center mr-3 flex-shrink-0">
+                        <i class="fa fa-ticket"></i>
+                    </div>
+                    <div class="bg-white p-3 rounded-lg shadow-sm max-w-[80%]">
+                        <p class="text-gray-800">您好！我是博洛尼月度优惠总监特权文档专属信息查询智能体，唯一服务依据为用户上传的当前最新版《优惠总监特权使用说明》官方文档，仅围绕文档内已载明的内容提供100%精准的信息查询应答。</p>
+                        <p class="text-gray-800 mt-2">请先更新当月版《优惠总监特权使用说明》官方文档，然后我可以为您提供精准的优惠信息查询服务。</p>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
